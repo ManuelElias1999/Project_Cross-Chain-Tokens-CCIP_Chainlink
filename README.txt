@@ -1,28 +1,30 @@
-REMIX DEFAULT WORKSPACE
+# TransferUSDCBasic Smart Contract
 
-Remix default workspace is present when:
-i. Remix loads for the very first time 
-ii. A new workspace is created with 'Default' template
-iii. There are no files existing in the File Explorer
+This Solidity smart contract facilitates the transfer of USDC tokens from the Avalanche Fuji network to another network, in this case, the Sepolia network (assuming it is properly configured on the CCIP network).
 
-This workspace contains 3 directories:
+## Functionalities
 
-1. 'contracts': Holds three contracts with increasing levels of complexity.
-2. 'scripts': Contains four typescript files to deploy a contract. It is explained below.
-3. 'tests': Contains one Solidity test file for 'Ballot' contract & one JS test file for 'Storage' contract.
+- Transfer USDC from the Avalanche Fuji network to the Sepolia network.
+- Check USDC balances and allowances.
+- Withdraw any remaining tokens in the contract by the owner.
 
-SCRIPTS
+## Dependencies
 
-The 'scripts' folder has four typescript files which help to deploy the 'Storage' contract using 'web3.js' and 'ethers.js' libraries.
+The contract depends on the following Chainlink contracts for its operation:
 
-For the deployment of any other contract, just update the contract's name from 'Storage' to the desired contract and provide constructor arguments accordingly 
-in the file `deploy_with_ethers.ts` or  `deploy_with_web3.ts`
+- `IRouterClient`: Interface for interacting with the CCIP contract.
+- `Client`: Library for creating and manipulating CCIP messages.
+- `IERC20`: Interface for interacting with ERC20 tokens.
+- `SafeERC20`: Library for performing safe ERC20 token transfers.
 
-In the 'tests' folder there is a script containing Mocha-Chai unit tests for 'Storage' contract.
+## Usage
 
-To run a script, right click on file name in the file explorer and click 'Run'. Remember, Solidity file must already be compiled.
-Output from script will appear in remix terminal.
+1. Deploy the contract on the Avalanche Fuji network.
+2. Users can call the `transferUsdcToSepolia` function by providing the receiver's address and the amount of USDC to transfer.
+3. The contract will verify USDC balances and allowances, calculate the CCIP fee, and perform the transfer if all conditions are met.
+4. The owner can call the `withdrawToken` function to withdraw any remaining tokens in the contract.
 
-Please note, require/import is supported in a limited manner for Remix supported modules.
-For now, modules supported by Remix are ethers, web3, swarmgw, chai, multihashes, remix and hardhat only for hardhat.ethers object/plugin.
-For unsupported modules, an error like this will be thrown: '<module_name> module require is not supported by Remix IDE' will be shown.
+## Important Notes
+
+- This contract is an example and should not be used in production without proper auditing.
+- It is assumed that the CCIP contract, LINK, and USDC contract addresses are correctly configured for the specified test networks.
